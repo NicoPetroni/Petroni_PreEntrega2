@@ -1,3 +1,3 @@
-# PreEntrega1
+# PreEntrega2
 
-Repositor: https://github.com/NicoPetroni/PreEntrega1.git
+Repositor: https://github.com/NicoPetroni/Petroni_PreEntrega2.git
