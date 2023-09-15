@@ -12,14 +12,13 @@ function actualizarListaProductos() {
   const carrito = document.getElementById("listaProd")
   carrito.innerHTML = '';
 
+Productos.forEach((prod, index) => {
+  const lineaCarrito = document.createElement("li")
 
-  Productos.forEach((prod, index) => {
-    const lineaCarrito = document.createElement("li")
+  lineaCarrito.innerHTML = `Producto: ${prod.Nombre} $${prod.Precio}`
 
-    lineaCarrito.innerHTML = `Producto: ${prod.Nombre} $${prod.Precio}`
-
-    //boton eliminar
-    const botonEliminar = document.createElement('button')
+  //boton eliminar
+  const botonEliminar = document.createElement('button')
     botonEliminar.innerText = 'borrar'
     botonEliminar.addEventListener('click', () => {
       Productos.splice(index, 1);
@@ -71,16 +70,13 @@ formProd.addEventListener('submit', e => {
 
   Productos.forEach((productoNuevo) => {
     console.log(`PRODUCTO ${productoNuevo.Nombre} $ ${productoNuevo.Precio}`)
-
   })
 
   formProd.reset();
 
   localStorage.setItem('productos', JSON.stringify(Productos))
 
-
   actualizarListaProductos();
-
 })
 
 //boton actualizar Subtotal
@@ -92,6 +88,4 @@ function actualizarSubTotal() {
     total += producto.Precio
   }
   pSumaTotal.innerHTML = `$${total}`
- 
-
 }
