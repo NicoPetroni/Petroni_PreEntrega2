@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shop</title>
+    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="main.js">
+    <title>js prueba</title>
 </head>
 <body>
-    <h1 class="text-center">Carrito de Compras</h1>
-    <form id="FormProd">
-        <label for="InputProd"></label> <input id="InputProd" type="text" placeholder="Nombre Producto"> 
-        <label for="InputPrecio"></label> <input id="InputPrecio" type="text" placeholder="Precio">
+    <h1">Carrito de Compras</h1>
+    <form id="formProd">
+        <label for="InputProd"></label> <input id="inputProd" type="text" placeholder="Nombre Producto"> 
+        <label for="InputPrecio"></label> <input id="inputPrecio" type="number" placeholder="Precio">
         <input type="submit" value="Agregar">
     </form>
 
     <h2>Lista de Productos</h2>
-    <div id="ListaProd">
+    <div id="">
+       <ul id="listaProd">
 
+
+       </ul>
     </div>
 
-
-    <script src="./main.js"></script>
-    
+    <div>
+        <h2>total a pagar</h2>
+        <p id="sumaTotal"> 
+          $0
+        </p>
+        <button id="actualizarTotal">Actualizar precio</button>
+    </div>
+<script src="./main.js"></script>   
 </body>
 </html>

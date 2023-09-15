@@ -1,87 +1,97 @@
-const FormProd = document.querySelector ("#FormProd");
-const InputProd = document.querySelector ("#InputProd");
-const InputPrecio = document.querySelector ("#InputPrecio");
-const divListaProd = document.querySelector ("#ListaProd");
+const formProd = document.getElementById("formProd");
+const divListaProd = document.getElementById("ListaProd");
+const pSumaTotal = document.getElementById("sumaTotal")
+const botonActualizarTotal = document.getElementById("actualizarTotal")
+const inputNombreProducto = document.getElementById("inputProd")
+const inputPrecioProducto = document.getElementById("inputPrecio")
 
-const Productos = json.parse(localStorage.getItem ("Productos")) || [];
+const Productos = []
+
+//actualizar lista
+function actualizarListaProductos() {
+  const carrito = document.getElementById("listaProd")
+  carrito.innerHTML = '';
+
+
+  Productos.forEach((prod, index) => {
+    const lineaCarrito = document.createElement("li")
+
+    lineaCarrito.innerHTML = `Producto: ${prod.Nombre} $${prod.Precio}`
+
+    //boton eliminar
+    const botonEliminar = document.createElement('button')
+    botonEliminar.innerText = 'borrar'
+    botonEliminar.addEventListener('click', () => {
+      Productos.splice(index, 1);
+      localStorage.setItem('productos', JSON.stringify(Productos))
+
+      actualizarListaProductos();
+    })
+
+    lineaCarrito.appendChild(botonEliminar)
+    carrito.appendChild(lineaCarrito)
+  })
+}
+
+function cargarProductosLocalStorage() {
+  const storeData = localStorage.getItem('productos')
+
+  if (storeData) {
+    const parsedData = JSON.parse(storeData)
+
+    parsedData.forEach((producto)=>{
+      producto.Precio = parseFloat(producto.Precio)
+    })
+    Productos.push(...parsedData)
+    actualizarListaProductos();
+  }
+}
+
+window.addEventListener('load', cargarProductosLocalStorage());
 
 class Producto {
-        constructor(NombreProducto, Precio) {
-            this.Producto = NombreProducto;
-            this.Precio = Precio;
-        }
-     }
-
-FormProd.onsubmit = e => {
-
-    const Producto = InputProd.value;
-    const Precio = InputPrecio.value;
-
-    const prod = new Producto ({Producto, Precio});
-    
-    CargarProducto (Producto)
-
+  constructor(Nombre, Precio) {
+    this.Nombre = Nombre;
+    this.Precio = Precio
+  }
 }
 
-    function CargarProducto (Producto){
-        Productos.push (Producto);
-        localStorage.setItem ("Productos", json.stringify (Productos));
-        MostrarProd()
+formProd.addEventListener('submit', e => {
+  e.preventDefault();
+ 
+  const nombreProducto = inputNombreProducto.value
+  const precioProducto = parseFloat(inputPrecioProducto.value)
+
+  const productoNuevo = new Producto(nombreProducto, precioProducto)
+
+  Productos.push(productoNuevo)
+
+  console.clear();
+
+
+  Productos.forEach((productoNuevo) => {
+    console.log(`PRODUCTO ${productoNuevo.Nombre} $ ${productoNuevo.Precio}`)
+
+  })
+
+  formProd.reset();
+
+  localStorage.setItem('productos', JSON.stringify(Productos))
+
+
+  actualizarListaProductos();
+
+})
+
+//boton actualizar Subtotal
+
+botonActualizarTotal.addEventListener("click", actualizarSubTotal)
+function actualizarSubTotal() {
+  let total = 0
+  for (const producto of Productos) {
+    total += producto.Precio
+  }
+  pSumaTotal.innerHTML = `$${total}`
+ 
+
 }
-
-function MostrarProd() {    
-    let ListaProdHtml = ''
-    for (const Producto of Productos) {
-        ListaProdHtml += Producto.Producto += Producto.Precio
-    }
-    divListaProd.innerHTML = ListaProdHtml
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-// class Producto {
-//     constructor(NombreProducto, Precio) {
-//         this.Nombre = NombreProducto;
-//         this.precio = Precio;
-//     }
-//  }
-
-//  const Productos = [];
-//  function SolicitarProducto() {
-//     const CantidadProductos = parseInt (prompt ('Cuantos productos desea ingresar?'));
-//     for (let i=0; i<CantidadProductos; i++){
-//     const Nombre = prompt('Ingrese el nombre del producto');
-//     const precio = parseFloat(prompt('Ingrese el valor del producto'));
-//     const prod = new Producto(Nombre, precio); 
-
-//     Productos.push(prod);  
-//  }
-//  }
- 
-//  SolicitarProducto();
- 
-//  // Calcular la suma total de los precios de los productos
-//  const sumaTotal = Productos.reduce((total, prod) => total + prod.precio, 0);
- 
-//  console.log("Productos:", Productos);
-//  console.log("Suma total de precios:", sumaTotal);
- 
-//  let totalConDescuento = sumaTotal; // Precio sin descuento
- 
-//  if (Productos.length >= 3) {
-//      const descuento = sumaTotal * 0.1;
-//      totalConDescuento -= descuento;
-//      console.log("Descuento aplicado:", descuento); 
-// }
-
-//  console.log("Total con descuento:", totalConDescuento); // Precio con descuento
