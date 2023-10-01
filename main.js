@@ -5,6 +5,7 @@ const botonActualizarTotal = document.getElementById("actualizarTotal")
 const inputNombreProducto = document.getElementById("inputProd")
 const inputPrecioProducto = document.getElementById("inputPrecio")
 
+
 const Productos = []
 
 //actualizar lista
@@ -17,19 +18,33 @@ Productos.forEach((prod, index) => {
 
   lineaCarrito.innerHTML = `Producto: ${prod.Nombre} $${prod.Precio}`
 
-  //boton eliminar
-  const botonEliminar = document.createElement('button')
-    botonEliminar.innerText = 'borrar'
-    botonEliminar.addEventListener('click', () => {
-      Productos.splice(index, 1);
-      localStorage.setItem('productos', JSON.stringify(Productos))
+ // Botón eliminar
+ const botonEliminar = document.createElement('button');
+ botonEliminar.innerText = 'borrar';
+ botonEliminar.addEventListener('click', () => {
+   Swal.fire({
+     title: '¿Estás seguro que desea eliminar el Producto?',
+     text: 'No podrás revertir esto',
+     icon: 'warning',
+     showCancelButton: true,
+     confirmButtonColor: '#3085d6',
+     cancelButtonColor: '#d33',
+     confirmButtonText: 'Sí, eliminar',
+     cancelButtonText: 'Cancelar'
+   }).then((result) => {
+     if (result.isConfirmed) {
+       // Si el usuario confirma la eliminación
+       Productos.splice(index, 1);
+       localStorage.setItem('productos', JSON.stringify(Productos));
+       actualizarListaProductos();
+       Swal.fire('¡Eliminado!', 'El producto ha sido eliminado.', 'success');
+     }
+   });
+ });
 
-      actualizarListaProductos();
-    })
-
-    lineaCarrito.appendChild(botonEliminar)
-    carrito.appendChild(lineaCarrito)
-  })
+ lineaCarrito.appendChild(botonEliminar);
+ carrito.appendChild(lineaCarrito);
+});
 }
 
 function cargarProductosLocalStorage() {
@@ -88,4 +103,5 @@ function actualizarSubTotal() {
     total += producto.Precio
   }
   pSumaTotal.innerHTML = `$${total}`
+
 }
