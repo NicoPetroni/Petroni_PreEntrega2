@@ -105,3 +105,19 @@ function actualizarSubTotal() {
   pSumaTotal.innerHTML = `$${total}`
 
 }
+
+//Ingresamos Fetch
+fetch('https://fakestoreapi.com/products')
+              .then(response => response.json())
+              .then(data=>mostrarData(data))
+              .catch(error => console.log(error))
+      
+        const mostrarData = (data) => {
+            console.log(data)
+            let body = ''
+            for (let i = 0; i<data.length; i++){
+                body += `<tr><td>${data[i].id}</td><td>${data[i].title}</td><td>${data[i].price}</td></tr>`
+            }
+      
+            document.getElementById('data').innerHTML = body
+        }
