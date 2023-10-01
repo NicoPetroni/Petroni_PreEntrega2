@@ -1,4 +1,4 @@
-# PreEntrega3
+# Proyecto Final
 
-Repositor: https://github.com/NicoPetroni/Petroni_PreEntrega3.git
+Repositor: https://github.com/NicoPetroni/ProyectoFinalPetroni.git
 
